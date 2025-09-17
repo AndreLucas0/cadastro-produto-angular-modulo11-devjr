@@ -1,0 +1,40 @@
+<div class="container mt-3">
+    
+    <app-product [categories]="categories" [product]="product" (saveEmitter)="saveProduct()"></app-product>
+    
+    <hr>
+    
+    <div class="display-6">
+        Produtos Cadastrados:
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <table class="table" id="productsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col" class="d-none d-md-table-cell">Descrição</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col" class="d-none d-md-table-cell">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <td>{{product.id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.price | currency: 'BRL'}}</td>
+                        <td>{{product.category.name}}</td>
+                        <td>
+                            <span class="badge bg-success me-1" *ngIf="product.newProduct">L</span>
+                            <span class="badge bg-primary" *ngIf="product.promotion">P</span>
+                        </td>    
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
