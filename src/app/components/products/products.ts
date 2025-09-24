@@ -18,6 +18,8 @@ export class Products implements OnInit {
   
   categories : Category [] = [];
 
+  showForm : boolean = false;
+
   constructor(private categoryService: CategoryService, private productService: ProductService) {}
 
   ngOnInit(): void {
@@ -38,13 +40,31 @@ export class Products implements OnInit {
     });
   }
 
-  saveProduct() {
-    this.productService.saveProduct(this.product).subscribe({
+  saveProduct(save: boolean) {
+
+    if (save) {
+      this.productService.saveProduct(this.product).subscribe({
       next: data => { 
         this.products.push(data);
-        this.product = {} as ProductInterface;
        }
     });
+    }
+
+    this.product = {} as ProductInterface;
+    this.showForm = false;
+    
   }
   
+  create() {
+    this.showForm = true;
+  }
+
+  edit(product : ProductInterface) {
+    this.product = product;
+    this.showForm = true;
+  }
+
+  delete(product : ProductInterface) {
+    console.log(product);
+  }
 }

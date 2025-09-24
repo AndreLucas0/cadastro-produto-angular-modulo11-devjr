@@ -28,7 +28,7 @@
 
                     <label for="selectCategory" class="col-sm-2 col-form-labe">Categoria:</label>
                     <div class="col-sm-4">
-                        <select class="form-select" aria-label="Selecione uma categoria" name="category" id="selectCategory" [(ngModel)]="product.category" required>
+                        <select class="form-select" aria-label="Selecione uma categoria" name="category" id="selectCategory" [(ngModel)]="product.category" [compareWith]="selectedCategory" required>
                             <option value="" *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
                         </select>
                     </div>
@@ -56,7 +56,7 @@
                 <div class="row mb-3 mt-3">
                     <div class="col-sm-4">
                         <button type="submit" class="btn btn-primary me-1" (click)="save()" [disabled]="formProduct.invalid">Cadastrar</button>
-                        <button type="button" class="btn btn-danger" (click)="cancel()">Cadastrar</button>
+                        <button type="button" class="btn btn-danger" (click)="cancel()">Cancelar</button>
                     </div>
                 </div>
 
