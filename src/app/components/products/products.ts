@@ -13,12 +13,10 @@ import { ProductService } from '../../services/product-service';
 export class Products implements OnInit {
 
   products : ProductInterface [] = [];
-
   product : ProductInterface = {} as ProductInterface;
-  
   categories : Category [] = [];
-
   showForm : boolean = false;
+  isEditing : boolean = false;
 
   constructor(private categoryService: CategoryService, private productService: ProductService) {}
 
@@ -43,16 +41,20 @@ export class Products implements OnInit {
   saveProduct(save: boolean) {
 
     if (save) {
-      this.productService.saveProduct(this.product).subscribe({
-      next: data => { 
-        this.products.push(data);
-       }
-    });
+      if (this.isEditing) {
+        this.productService.updateProduct(this.product).subscribe();
+      } else {
+        this.productService.saveProduct(this.product).subscribe({
+        next: data => { 
+          this.products.push(data);
+        }
+        });
+      }
     }
 
     this.product = {} as ProductInterface;
     this.showForm = false;
-    
+    this.isEditing = false;
   }
   
   create() {
@@ -62,9 +64,14 @@ export class Products implements OnInit {
   edit(product : ProductInterface) {
     this.product = product;
     this.showForm = true;
+    this.isEditing = true;
   }
 
   delete(product : ProductInterface) {
-    console.log(product);
+    this.productService.deleteProduct(product).subscribe({
+      next: () => {
+        this.products = this.products.filter(p => p.id !== product.id); 
+      }
+    });
   }
 }

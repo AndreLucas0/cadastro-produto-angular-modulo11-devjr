@@ -17,4 +17,12 @@ export class ProductService {
   saveProduct(product : ProductInterface) {
     return this.http.post<ProductInterface>("http://localhost:8080/products", product);
   }
+
+  updateProduct(product : ProductInterface) {
+    return this.http.put<ProductInterface>(`http://localhost:8080/products/${product.id}`, product);
+  }
+
+  deleteProduct(product : ProductInterface) {
+    return this.http.delete<void>(`http://localhost:8080/products/${product.id}`);
+  }
 }
